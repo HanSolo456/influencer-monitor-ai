@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spyfluence Automation</title>
+  <style>
+    body {
+      background-color: #0b0f15;
+      font-family: Inter, sans-serif;
+      color: #e2e8f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #151a21;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    button {
+      background: #00e6b7;
+      color: #0b0f15;
+      padding: 12px 24px;
+      border: none;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #message {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #00e6b7;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Track an Influencer</h1>
+    <p>Enter YouTube Channel Link or Handle</p>
+    <input type="text" id="channelInput" placeholder="e.g. https://youtube.com/@mkbhd or @mkbhd">
+    <button onclick="sendData()">Start Monitoring</button>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    async function sendData() {
+      const input = document.getElementById('channelInput').value;
+      const message = document.getElementById('message');
+
+      // Just forward the input as 'youtubeHandle'
+      const youtubeHandle = input.trim();
+
+      message.innerText = '🚀 Sending to Spyfluence...';
+
+      try {
+        const res = await fetch('https://hansolo007.app.n8n.cloud/webhook/creator-summary', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ youtubeHandle })
+        });
+
+        if (res.ok) {
+          message.innerText = '✅ Monitoring started! Watch WhatsApp/Discord for updates.';
+        } else {
+          message.innerText = '❌ Failed to send. Please try again.';
+        }
+      } catch (err) {
+        message.innerText = '❌ Error connecting to Spyfluence.';
+      }
+    }
+  </script>
+
+</body>
+</html>
